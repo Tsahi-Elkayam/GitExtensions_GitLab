@@ -1,0 +1,96 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RootNamespace>GitExtensions.GitLab.Tests</RootNamespace>
+    <AssemblyName>GitExtensions.GitLab.Tests</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Test Frameworks -->
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.6.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.4">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+
+    <!-- Code Coverage -->
+    <PackageReference Include="coverlet.collector" Version="6.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+
+    <!-- Mocking Framework -->
+    <PackageReference Include="Moq" Version="4.20.70" />
+
+    <!-- Assertion Libraries -->
+    <PackageReference Include="FluentAssertions" Version="6.12.0" />
+
+    <!-- Test Data Generation -->
+    <PackageReference Include="AutoFixture" Version="4.18.1" />
+    <PackageReference Include="AutoFixture.Xunit2" Version="4.18.1" />
+
+    <!-- Test Utilities -->
+    <PackageReference Include="AutoFixture.AutoMoq" Version="4.18.1" />
+    <PackageReference Include="Bogus" Version="35.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Project Reference -->
+    <ProjectReference Include="..\src\GitExtensions.GitLab.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Test Categories -->
+    <Folder Include="Unit\" />
+    <Folder Include="Integration\" />
+    <Folder Include="UI\" />
+    <Folder Include="Mocks\" />
+    <Folder Include="TestData\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Test Data Files -->
+    <None Update="TestData\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <!-- Test Settings -->
+    <VSTestLogger>trx</VSTestLogger>
+    <VSTestResultsDirectory>$(MSBuildThisFileDirectory)/TestResults</VSTestResultsDirectory>
+    <CollectCoverage>true</CollectCoverage>
+    <CoverletOutput>$(MSBuildThisFileDirectory)/TestResults/Coverage/</CoverletOutput>
+    <CoverletOutputFormat>cobertura</CoverletOutputFormat>
+
+    <!-- Analyzer Settings -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisMode>All</AnalysisMode>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <!-- Test Run Settings -->
+  <ItemGroup>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <!-- Custom Test Tasks -->
+  <Target Name="RunTests" DependsOnTargets="Build">
+    <Message Text="Running tests..." Importance="high" />
+    <Exec Command="dotnet test --no-build --verbosity normal" />
+  </Target>
+
+  <Target Name="RunTestsWithCoverage" DependsOnTargets="Build">
+    <Message Text="Running tests with coverage..." Importance="high" />
+    <Exec Command="dotnet test --no-build --collect:'XPlat Code Coverage'" />
+  </Target>
+
+</Project>

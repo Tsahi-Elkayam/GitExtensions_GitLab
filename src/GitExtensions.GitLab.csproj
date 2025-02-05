@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>GitExtensions.GitLab</AssemblyName>
+    <RootNamespace>GitExtensions.GitLab</RootNamespace>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GitExtensions.Extensibility" Version="4.0.0" />
+    <PackageReference Include="GitLabApiClient" Version="1.8.0" />
+  </ItemGroup>
+</Project>
